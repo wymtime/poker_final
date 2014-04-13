@@ -37,7 +37,7 @@ describe Hand do
   end
   
   describe "#beats" do
-    it "a straight flush beats four of a kind" do
+    it "lets a straight flush beats four of a kind" do
       hand1 = Hand.new([
         Card.new(:clubs, :eight),
         Card.new(:clubs, :seven),
@@ -57,7 +57,7 @@ describe Hand do
       expect(hand2.beats?(hand1)).to be(false)
     end
     
-    it "a straight flush beats a lesser straight flush" do
+    it "lets a straight flush beats a lesser straight flush" do
       hand1 = Hand.new([
         Card.new(:hearts, :eight),
         Card.new(:hearts, :seven),

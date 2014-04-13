@@ -2,42 +2,52 @@ require 'hand'
 require 'deck'
 
 class Player
+  
+  attr_reader :name, :bankroll
+  attr_accessor :hand #, :pot
 
-  POKER_HANDS {
-    one_pair => 1
-
-  }
-
-  attr_accessor :hand
-
-  def initialize(hand = [])
-    @hand = Hand.new(Deck.new)
-    #@money
+  def initialize(name, bankroll)
+    @name = name
+    @bankroll = bankroll
   end
 
-  def discard(indices)
-    if indices.count > 3
+  def fold(deck)
+    return_cards(deck)
+  end
+
+  def raise_bet(raise_amt, game)
+    raise "player can't cover raise" if raise_amt > @bankroll
+    game.take_amt(self, raise_amt)
+    @bankroll -= raise_amt
+  end
+
+  def call(call_amt, game)
+    raise "player can't cover call" if call_amt > @bankroll
+    game.take_amt(self, call_amt)
+    @bankroll -= call_amt
+  end
+  
+  def pay_out(pot)
+    @bankroll += pot
+  end
+  
+  def discard(card_indices, deck)
+    if card_indices.count > 3
       raise "cannot trade that many cards"
     end
-    if !indices.all? { |index| index.is_a?(Fixnum) && index < 5 }
+    if !card_indices.all? { |index| index.is_a?(Fixnum) && index < 5 }
       raise "please provide proper indices"
     end
-    indices.each do |card_index|
-      hand.cards.delete_at(card_index)
-    end
-    hand
+    discarded = @hand.cards.values_at(*card_indices)
+    deck.return(discarded)
+    #select only the cards that are not in card_indices
+    @hand.cards.select! { |card| !card_indices.include?(@hand.cards.index(card)) }
+    #replace however many cards have been discarded
+    @hand.cards += deck.take(discarded.count)
   end
-
-  def fold
+  
+  def return_cards(deck)
+    @hand.return_cards(deck)
+    @hand = nil
   end
-
-  def raise_bet
-  end
-
-  def call
-  end
-
-  def check
-  end
-
 end
