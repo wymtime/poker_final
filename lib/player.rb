@@ -14,6 +14,7 @@ class Player
 
   def fold(deck)
     return_cards(deck)
+    set_check
   end
 
   def raise_bet(raise_amt, game)
@@ -22,10 +23,14 @@ class Player
     @bankroll -= raise_amt
   end
 
-  def call(call_amt, game)
+  def call_bet(call_amt, game)
     raise "player can't cover call" if call_amt > @bankroll
     game.take_amt(self, call_amt)
     @bankroll -= call_amt
+  end
+  
+  def set_check
+    @check = true
   end
   
   def check?
