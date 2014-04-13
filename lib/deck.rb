@@ -1,4 +1,4 @@
-require 'card'
+require_relative 'card'
 
 class Deck
 
@@ -14,7 +14,7 @@ class Deck
 
   def initialize(cards = Deck.all_cards)
     @cards = cards
-    shuffle
+    @cards.shuffle
   end #end
   
   def count
@@ -24,13 +24,13 @@ class Deck
   def take(n) # Taking cards out of the deck
     taken = []
     n.times do
-      taken << cards.shift
+      taken << @cards.shift
     end
     taken
   end #take
 
   def shuffle
-    cards.shuffle
+    @cards = @cards.shuffle
   end #shuffle
   
   def return(cards)

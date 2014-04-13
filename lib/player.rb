@@ -1,5 +1,5 @@
-require 'hand'
-require 'deck'
+require_relative 'hand'
+
 
 class Player
   
@@ -10,11 +10,16 @@ class Player
     @name = name
     @bankroll = bankroll
     @check = false
+    #@hand = Hand.deal_from(deck)
   end
 
   def fold(deck)
     return_cards(deck)
     set_check
+  end
+  
+  def folded?
+    @hand.nil?
   end
 
   def raise_bet(raise_amt, game)
@@ -31,6 +36,10 @@ class Player
   
   def set_check
     @check = true
+  end
+  
+  def uncheck
+    @check = false
   end
   
   def check?
@@ -62,6 +71,10 @@ class Player
   end
   
   def display_hand
-    @hand.cards.map { |card| card.to_s}.join(' ')
+    if @hand.nil?
+      "none since they folded"
+    else
+      @hand.cards.map { |card| card.to_s }.join(' ')
+    end
   end
 end

@@ -1,4 +1,4 @@
-require 'deck'
+require_relative 'deck'
 
 class Hand
   
