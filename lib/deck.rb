@@ -21,10 +21,6 @@ class Deck
     @cards.count
   end
 
-  def deal(num_cards) # Give cards to player
-    take(num_cards)
-  end #deal
-
   def take(n) # Taking cards out of the deck
     taken = []
     n.times do
