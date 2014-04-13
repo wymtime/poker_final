@@ -1,0 +1,2 @@
+require 'card'
+require 'rspec'
