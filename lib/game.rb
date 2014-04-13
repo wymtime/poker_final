@@ -1,12 +1,32 @@
 class Game
-  attr_accessor :pot, :deck, :turn, :bets
+  attr_accessor :pot, :deck, :players, :bets
   
-  def initialize
+  def initialize(*players)
     @pot = 0
     @bets = {}
+    @deck = Deck.new
+    @players = players
   end
 
-  def player_turn
+  def start
+    
+  end
+
+  def round
+    #NEED TO ADD SET CHECK METHOD TO Player Class
+    until @players.all? {|player| player.check?}
+      @player.each do |player|
+        #if player is max bet, they can either check, raise or fold
+        #else they must call, raise or fold
+        puts "#{player.name}, you have $#{player.bankroll} on your bankroll."
+        puts "The pot is: $#{@pot}"
+        puts "The current bet is: $#{@bets.values.max}"
+        puts "Your bet is: #{@bets[player]}"
+        #puts "Do you raise, call, check or fold?"
+        response = gets.chomp.downcase
+        
+      end
+    end
   end #player_turn
   
   #def 

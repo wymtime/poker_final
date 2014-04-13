@@ -3,12 +3,13 @@ require 'deck'
 
 class Player
   
-  attr_reader :name, :bankroll
+  attr_reader :name, :bankroll, :check
   attr_accessor :hand #, :pot
 
   def initialize(name, bankroll)
     @name = name
     @bankroll = bankroll
+    @check = false
   end
 
   def fold(deck)
@@ -25,6 +26,10 @@ class Player
     raise "player can't cover call" if call_amt > @bankroll
     game.take_amt(self, call_amt)
     @bankroll -= call_amt
+  end
+  
+  def check?
+    @check
   end
   
   def pay_out(pot)
@@ -49,5 +54,9 @@ class Player
   def return_cards(deck)
     @hand.return_cards(deck)
     @hand = nil
+  end
+  
+  def display_hand
+    @hand.cards.map { |card| card.to_s}.join(' ')
   end
 end
